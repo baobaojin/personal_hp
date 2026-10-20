@@ -1,8 +1,8 @@
 ---
 name: write-guide
 description: 基于知识库已有记录，生成结构化的攻略、总结、内容输出。
-触发词：帮我写攻略、整理XXX攻略、帮我写总结、生成一篇关于XXX的内容。
-NOT for：录入新内容（用 intake）、查询知识库（用 ask）。
+triggers: 帮我写攻略、整理XXX攻略、帮我写总结、生成一篇关于XXX的内容。
+not_for: 录入新内容（用 intake）、查询知识库（用 ask）。
 ---
 
 ## 适用场景

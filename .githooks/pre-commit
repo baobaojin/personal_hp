@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# pre-commit hook：提交前自动重新生成 marketplace.json
+# 安装方式：git config core.hooksPath .githooks
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+echo "🔄 更新 marketplace.json ..."
+
+# 优先用 python3，没有就跳过
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$REPO_ROOT/scripts/gen-marketplace.py"
+  # 把更新后的 marketplace.json 加入本次 commit
+  git add "$REPO_ROOT/plugins/marketplace.json"
+else
+  echo "⚠️  未找到 python3，跳过 marketplace.json 更新"
+fi

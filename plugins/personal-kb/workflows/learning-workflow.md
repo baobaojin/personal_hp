@@ -1,8 +1,8 @@
 ---
 name: learning-workflow
 description: 系统学习一个新方向时使用，从建知识地图到复盘完整闭环。
-触发词：我要开始学XXX、帮我规划XXX的学习、系统学习XXX。
-NOT for：单次知识点记录（用 intake）、日常复习（用 review）。
+triggers: 我要开始学XXX、帮我规划XXX的学习、系统学习XXX。
+not_for: 单次知识点记录（用 intake）、日常复习（用 review）。
 ---
 
 ## 适用场景

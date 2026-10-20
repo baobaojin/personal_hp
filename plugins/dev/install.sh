@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # dev 插件安装脚本
-# 安装程序开发规范到全局 ~/.claude/rules/
-# 支持选择安装范围：全部 / 仅前端 / 仅后端 / 仅架构
+# 支持安装全部规范，或按方向细粒度选择
 
 set -e
 PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -15,25 +14,48 @@ echo "  personal-hp · dev 插件（程序开发规范）"
 echo "================================================"
 echo ""
 
-if [ -z "$SCOPE" ]; then
-  echo "选择安装范围："
-  echo "  1) all          — 安装全部规范（前端 + 后端 + 架构 + 通用）"
-  echo "  2) frontend     — 仅前端规范"
-  echo "  3) backend      — 仅后端规范"
-  echo "  4) architecture — 仅架构设计规范"
-  echo "  5) common       — 仅通用规范（代码质量 + Git）"
+# 扫描所有可用规范
+list_scopes() {
+  echo "可用规范（输入编号或名称）："
   echo ""
-  read -p "输入编号（默认 1）：" choice
-  choice=${choice:-1}
-  case $choice in
-    1) SCOPE="all" ;;
-    2) SCOPE="frontend" ;;
-    3) SCOPE="backend" ;;
-    4) SCOPE="architecture" ;;
-    5) SCOPE="common" ;;
-    *) echo "无效输入"; exit 1 ;;
-  esac
-fi
+  local i=1
+  for dir in "$PLUGIN_DIR/rules"/*/; do
+    scope=$(basename "$dir")
+    files=$(ls "$dir"*.md 2>/dev/null | wc -l | tr -d ' ')
+    echo "  $i) $scope  （$files 个规范文件）"
+    i=$((i + 1))
+  done
+  echo "  0) all  — 安装全部规范"
+  echo ""
+}
+
+# 把编号转成目录名
+resolve_scope() {
+  local input=$1
+  if [ "$input" = "0" ] || [ "$input" = "all" ]; then
+    echo "all"
+    return
+  fi
+  # 如果是数字，按序号找对应目录
+  if [[ "$input" =~ ^[0-9]+$ ]]; then
+    local i=1
+    for dir in "$PLUGIN_DIR/rules"/*/; do
+      if [ "$i" = "$input" ]; then
+        basename "$dir"
+        return
+      fi
+      i=$((i + 1))
+    done
+    echo ""
+    return
+  fi
+  # 如果是名称，直接验证是否存在
+  if [ -d "$PLUGIN_DIR/rules/$input" ]; then
+    echo "$input"
+  else
+    echo ""
+  fi
+}
 
 install_scope() {
   local scope=$1
@@ -50,18 +72,34 @@ install_scope() {
   log_info "✅ $scope → $dest"
 }
 
+if [ -z "$SCOPE" ]; then
+  list_scopes
+  read -p "选择要安装的规范：" choice
+  SCOPE=$(resolve_scope "$choice")
+  if [ -z "$SCOPE" ]; then
+    log_error "无效输入：$choice"
+    exit 1
+  fi
+fi
+
 echo ""
-case $SCOPE in
-  all)
-    install_scope frontend
-    install_scope backend
-    install_scope architecture
-    install_scope common
-    ;;
-  *)
-    install_scope "$SCOPE"
-    ;;
-esac
+if [ "$SCOPE" = "all" ]; then
+  log_step "安装全部规范..."
+  for dir in "$PLUGIN_DIR/rules"/*/; do
+    install_scope "$(basename "$dir")"
+  done
+else
+  RESOLVED=$(resolve_scope "$SCOPE")
+  if [ -z "$RESOLVED" ]; then
+    log_error "找不到规范：$SCOPE"
+    echo ""
+    list_scopes
+    exit 1
+  fi
+  install_scope "$RESOLVED"
+fi
 
 echo ""
 log_info "安装完成，下次打开 Claude Code 即自动生效。"
+echo ""
+echo "已安装到 ~/.claude/rules/dev-*/ 目录下。"

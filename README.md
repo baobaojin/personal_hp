@@ -33,7 +33,7 @@ curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.
 # 安装到已有知识库
 curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.sh | bash -s -- personal-kb upgrade ~/my-kb
 
-# 安装前端开发规范
+# 安装开发规范
 curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.sh | bash -s -- dev
 ```
 
@@ -151,26 +151,33 @@ bash install.sh personal-kb update ~/my-kb
 
 ## dev 插件
 
-安装程序开发规范到全局 `~/.claude/rules/`，在所有开发项目中自动生效：
+安装程序开发规范到全局 `~/.claude/rules/`，在所有开发项目中自动生效。
+
+支持按方向细粒度安装，新增规范目录后自动识别无需修改脚本：
 
 ```bash
-# 安装全部规范
+# 交互选择
 bash install.sh dev
 
-# 安装指定范围
-bash install.sh dev frontend     # 仅前端
-bash install.sh dev backend      # 仅后端
-bash install.sh dev architecture # 仅架构设计
-bash install.sh dev common       # 仅通用（代码质量 + Git）
+# 直接指定方向
+bash install.sh dev frontend      # 前端规范
+bash install.sh dev backend       # 后端规范
+bash install.sh dev python        # Python 规范
+bash install.sh dev ai            # AI 应用开发规范
+bash install.sh dev architecture  # 架构设计规范
+bash install.sh dev common        # 通用（代码质量 + Git）
+bash install.sh dev all           # 全部
 ```
 
-包含规范：
+当前包含规范：
 
 | 目录 | 内容 |
 |---|---|
-| `frontend/` | 命名规范、代码风格、React/Vue/TypeScript 规范、性能、安全 |
+| `frontend/` | 命名规范、代码风格、React/Vue/TypeScript、性能、安全 |
 | `backend/` | API 设计、数据库规范、错误处理、安全 |
-| `architecture/` | 分层原则、模块划分、设计原则（SOLID/KISS/YAGNI）、技术选型 |
+| `python/` | PEP 8、类型注解、项目结构、pytest |
+| `ai/` | Prompt 工程、RAG、Agent、LLM API 使用规范 |
+| `architecture/` | 分层原则、模块划分、SOLID/KISS/YAGNI、技术选型 |
 | `common/` | 代码质量、Git 工作流、提交规范、PR 规范 |
 
 ---

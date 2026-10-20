@@ -1,8 +1,8 @@
 ---
 name: intake-book
 description: 整理图书内容、读书笔记到知识库时使用。
-触发词：帮我整理这本书、把这本书的笔记存进来、读书笔记整理。
-NOT for：整理文章（用 intake-article）、记录学习内容（用 intake）。
+triggers: 帮我整理这本书、把这本书的笔记存进来、读书笔记整理。
+not_for: 整理文章（用 intake-article）、记录学习内容（用 intake）。
 ---
 
 ## 流程

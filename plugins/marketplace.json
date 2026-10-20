@@ -1,0 +1,374 @@
+{
+  "plugins": [
+    {
+      "name": "dev",
+      "version": "1.0.0",
+      "description": "程序开发规范插件，按语言/领域细粒度安装",
+      "rules": [
+        {
+          "name": "ai-dev-conventions",
+          "category": "ai",
+          "file": "rules/ai/ai-dev-conventions.md",
+          "description": "AI 应用开发规范，涵盖 Prompt 工程、RAG、Agent、LLM API 使用",
+          "paths": []
+        },
+        {
+          "name": "architecture-conventions",
+          "category": "architecture",
+          "file": "rules/architecture/architecture-conventions.md",
+          "description": "架构设计原则，涵盖分层架构、模块划分、依赖管理、可扩展性",
+          "paths": []
+        },
+        {
+          "name": "backend-conventions",
+          "category": "backend",
+          "file": "rules/backend/backend-conventions.md",
+          "description": "后端开发编码规范，涵盖 API 设计、数据库、错误处理、安全",
+          "paths": [
+            "**/*.java",
+            "**/*.py",
+            "**/*.go",
+            "**/*.ts"
+          ]
+        },
+        {
+          "name": "code-quality",
+          "category": "common",
+          "file": "rules/common/code-quality.md",
+          "description": "代码质量和最佳实践规范，涵盖代码组织、错误处理、复用、可维护性",
+          "paths": []
+        },
+        {
+          "name": "git-workflow",
+          "category": "common",
+          "file": "rules/common/git-workflow.md",
+          "description": "Git 工作流、分支命名、提交规范、PR 规范",
+          "paths": []
+        },
+        {
+          "name": "frontend-conventions",
+          "category": "frontend",
+          "file": "rules/frontend/frontend-conventions.md",
+          "description": "前端开发编码规范，涵盖命名、代码风格、React/Vue、TypeScript、性能和安全",
+          "paths": [
+            "**/*.js",
+            "**/*.jsx",
+            "**/*.ts",
+            "**/*.tsx",
+            "**/*.vue",
+            "**/*.css",
+            "**/*.scss"
+          ]
+        },
+        {
+          "name": "python-conventions",
+          "category": "python",
+          "file": "rules/python/python-conventions.md",
+          "description": "Python 开发编码规范，涵盖代码风格、类型注解、项目结构、测试",
+          "paths": [
+            "**/*.py"
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "name": "code-review",
+          "type": "skill",
+          "file": "skills/code-review.md",
+          "description": "对当前改动或指定代码进行全面 Code Review，覆盖正确性、安全、性能、可维护性。",
+          "triggers": [
+            "帮我 review",
+            "code review",
+            "代码审查",
+            "review 一下",
+            "检查代码"
+          ],
+          "not_for": [
+            "生成代码（用 gen-code）",
+            "写测试（用 gen-test）",
+            "技术方案设计（用 tech-spec）"
+          ]
+        },
+        {
+          "name": "debug",
+          "type": "skill",
+          "file": "skills/debug.md",
+          "description": "系统排查 bug 或异常，从现象到根因，输出可验证的修复方案。",
+          "triggers": [
+            "帮我排查",
+            "这里有 bug",
+            "为什么报错",
+            "怎么修这个问题",
+            "帮我看一下这个错误"
+          ],
+          "not_for": [
+            "code review（用 code-review）",
+            "性能优化（用 optimize）"
+          ]
+        },
+        {
+          "name": "gen-code",
+          "type": "skill",
+          "file": "skills/gen-code.md",
+          "description": "根据需求描述生成可直接使用的代码，遵循项目已有风格和规范。",
+          "triggers": [
+            "帮我写代码",
+            "生成代码",
+            "实现这个功能",
+            "写一个函数",
+            "帮我实现"
+          ],
+          "not_for": [
+            "技术方案设计（用 tech-spec）",
+            "代码修改（直接编辑）"
+          ]
+        },
+        {
+          "name": "gen-test",
+          "type": "skill",
+          "file": "skills/gen-test.md",
+          "description": "为指定代码生成单元测试，覆盖正向流程、边界条件和异常场景。",
+          "triggers": [
+            "帮我写测试",
+            "生成单测",
+            "写单元测试",
+            "给这个函数写测试"
+          ],
+          "not_for": [
+            "运行测试（直接用终端）",
+            "code review（用 code-review）"
+          ]
+        },
+        {
+          "name": "optimize",
+          "type": "skill",
+          "file": "skills/optimize.md",
+          "description": "分析代码或系统的性能瓶颈，给出可量化的优化方案。",
+          "triggers": [
+            "帮我优化",
+            "性能太慢",
+            "怎么提升性能",
+            "这里太慢了",
+            "优化一下"
+          ],
+          "not_for": [
+            "bug 修复（用 debug）",
+            "代码重构（用 refactor）"
+          ]
+        },
+        {
+          "name": "refactor",
+          "type": "skill",
+          "file": "skills/refactor.md",
+          "description": "对指定代码进行重构，在不改变外部行为的前提下改善代码结构。",
+          "triggers": [
+            "帮我重构",
+            "代码太乱了",
+            "优化代码结构",
+            "这段代码怎么整理",
+            "重构一下"
+          ],
+          "not_for": [
+            "性能优化（用 optimize）",
+            "bug 修复（用 debug）",
+            "新功能开发"
+          ]
+        },
+        {
+          "name": "tech-spec",
+          "type": "skill",
+          "file": "skills/tech-spec.md",
+          "description": "根据需求描述生成技术方案文档，涵盖方案设计、接口定义、风险评估。",
+          "triggers": [
+            "帮我写技术方案",
+            "出一个技术设计",
+            "tech spec",
+            "这个需求怎么实现",
+            "帮我设计一下"
+          ],
+          "not_for": [
+            "直接写代码（用 gen-code）",
+            "code review（用 code-review）"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "personal-kb",
+      "version": "1.0.0",
+      "description": "个人知识库 AI 工作流插件",
+      "skills": [
+        {
+          "name": "ask",
+          "type": "skill",
+          "file": "skills/ask.md",
+          "description": "基于个人知识库回答问题，区分知识库记录和通用知识。",
+          "triggers": [
+            "帮我回答",
+            "我记得",
+            "查一下",
+            "我之前学过",
+            "根据我的笔记",
+            "知识库里有没有"
+          ],
+          "not_for": [
+            "录入新内容",
+            "制定计划",
+            "复习出题"
+          ]
+        },
+        {
+          "name": "intake",
+          "type": "skill",
+          "file": "skills/intake.md",
+          "description": "有任何新内容需要记录时使用，包括学到的知识、想法、感悟、工作记录等。",
+          "triggers": [
+            "记录",
+            "记一下",
+            "我刚学了",
+            "我想到了",
+            "帮我整理一下"
+          ],
+          "not_for": [
+            "查询知识库",
+            "制定计划",
+            "复习出题"
+          ]
+        },
+        {
+          "name": "organize",
+          "type": "skill",
+          "file": "skills/organize.md",
+          "description": "给定一批原始材料（文件路径、目录、粘贴内容），自行分析、去冗余、归类、整理后写入知识库，无需逐步确认。",
+          "triggers": [
+            "整理这些文件",
+            "整理这个文件夹",
+            "把这些内容整理进知识库",
+            "归纳这批材料",
+            "整理进去"
+          ],
+          "not_for": [
+            "记录单条新内容（用 intake）",
+            "总结单篇文章（用 summarize）",
+            "查询知识库（用 ask）"
+          ]
+        },
+        {
+          "name": "plan",
+          "type": "skill",
+          "file": "skills/plan.md",
+          "description": "分析当前学习状态，给出今天应该做的一件具体的事。",
+          "triggers": [
+            "今天学什么",
+            "帮我安排",
+            "学习计划",
+            "这周怎么学",
+            "我该干什么"
+          ],
+          "not_for": [
+            "录入内容",
+            "复习出题",
+            "开发任务拆解"
+          ]
+        },
+        {
+          "name": "review",
+          "type": "skill",
+          "file": "skills/review.md",
+          "description": "每日复习到期笔记，逐篇出题，根据答题结果更新下次复习时间。",
+          "triggers": [
+            "复习",
+            "今天该复习什么",
+            "出题考我",
+            "检测一下"
+          ],
+          "not_for": [
+            "录入新内容",
+            "查询知识库",
+            "制定学习计划"
+          ]
+        },
+        {
+          "name": "intake-article",
+          "type": "skill-extended",
+          "file": "skills-extended/intake-article.md",
+          "description": "给定一篇或多篇内容（链接、本地文件、粘贴文本），提炼核心观点写入知识库。适用于外部文章、公众号、博客、自己存的文章文本。",
+          "triggers": [
+            "帮我整理这篇文章",
+            "存一下这篇掘金/公众号",
+            "帮我总结这篇",
+            "把这篇整理进去",
+            "整理这几篇文章"
+          ],
+          "not_for": [
+            "整理图书（用 intake-book）",
+            "记录自己学到的内容（用 intake）",
+            "批量整理本地文档/文件夹（用 organize）"
+          ]
+        },
+        {
+          "name": "intake-book",
+          "type": "skill-extended",
+          "file": "skills-extended/intake-book.md",
+          "description": "整理图书内容、读书笔记到知识库时使用。",
+          "triggers": [
+            "帮我整理这本书",
+            "把这本书的笔记存进来",
+            "读书笔记整理"
+          ],
+          "not_for": [
+            "整理文章（用 intake-article）",
+            "记录学习内容（用 intake）"
+          ]
+        },
+        {
+          "name": "write-guide",
+          "type": "skill-extended",
+          "file": "skills-extended/write-guide.md",
+          "description": "基于知识库已有记录，生成结构化的攻略、总结、内容输出。",
+          "triggers": [
+            "帮我写攻略",
+            "整理XXX攻略",
+            "帮我写总结",
+            "生成一篇关于XXX的内容"
+          ],
+          "not_for": [
+            "录入新内容（用 intake）",
+            "查询知识库（用 ask）"
+          ]
+        },
+        {
+          "name": "dev-workflow",
+          "type": "workflow",
+          "file": "workflows/dev-workflow.md",
+          "description": "做一个具体的开发任务时使用，从任务规格到经验沉淀完整闭环。",
+          "triggers": [
+            "我要做XXX功能",
+            "帮我拆解这个任务",
+            "开发任务",
+            "需求实现"
+          ],
+          "not_for": [
+            "学习新知识（用学习工作流）",
+            "日常笔记记录（用 intake）"
+          ]
+        },
+        {
+          "name": "learning-workflow",
+          "type": "workflow",
+          "file": "workflows/learning-workflow.md",
+          "description": "系统学习一个新方向时使用，从建知识地图到复盘完整闭环。",
+          "triggers": [
+            "我要开始学XXX",
+            "帮我规划XXX的学习",
+            "系统学习XXX"
+          ],
+          "not_for": [
+            "单次知识点记录（用 intake）",
+            "日常复习（用 review）"
+          ]
+        }
+      ]
+    }
+  ]
+}

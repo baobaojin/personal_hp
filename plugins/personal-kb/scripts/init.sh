@@ -104,10 +104,54 @@ EOF
 echo ""
 log_info "✅ 初始化完成！"
 echo ""
-echo "下一步："
-echo -e "  1. 打开并填写 $TARGET/docs/meta/about-me.md（AI 助手效果的基础）"
-echo "  2. cd $TARGET && git init && git add -A && git commit -m 'init'"
-echo "  3. python3 -m venv .venv && source .venv/bin/activate"
-echo "  4. pip install mkdocs mkdocs-material -i https://pypi.tuna.tsinghua.edu.cn/simple"
-echo "  5. mkdocs serve  # 本地预览"
+
+# 引导填写 about-me.md
+echo "================================================"
+echo "  最后一步：填写「关于我」（选填，可跳过）"
+echo "================================================"
 echo ""
+echo "docs/meta/about-me.md 是 AI 助手了解你的基础，"
+echo "填得越详细，AI 的建议越准确。"
+echo ""
+echo "  1) 现在填写（推荐）"
+echo "  2) 跳过，稍后自己填"
+echo ""
+read -p "选择（默认 2）：" about_choice
+about_choice=${about_choice:-2}
+
+if [ "$about_choice" = "1" ]; then
+  ABOUT_ME="$TARGET/docs/meta/about-me.md"
+  echo ""
+  echo "请依次回答以下问题（直接回车跳过某项）："
+  echo ""
+
+  read -p "你的职业/身份：" job
+  read -p "熟悉的技术栈：" stack
+  read -p "短期目标（3个月）：" goal_short
+  read -p "中期目标（1年）：" goal_mid
+  read -p "学习方式偏好（如：碎片时间为主）：" learning_style
+
+  # 把回答写入 about-me.md
+  sed -i '' \
+    -e "s/- 职业：$/- 职业：$job/" \
+    -e "s/- 技术栈：$/- 技术栈：$stack/" \
+    -e "s/- 短期（3个月）：$/- 短期（3个月）：$goal_short/" \
+    -e "s/- 中期（1年）：$/- 中期（1年）：$goal_mid/" \
+    "$ABOUT_ME" 2>/dev/null || true
+
+  echo ""
+  log_info "✅ 已保存到 $ABOUT_ME"
+  echo "后续可以随时打开文件继续完善。"
+else
+  echo ""
+  echo "已跳过。请记得后续打开 $TARGET/docs/meta/about-me.md 填写。"
+fi
+
+echo ""
+echo "接下来："
+echo "  1. cd $TARGET && git init && git add -A && git commit -m 'init'"
+echo "  2. python3 -m venv .venv && source .venv/bin/activate"
+echo "  3. pip install mkdocs mkdocs-material -i https://pypi.tuna.tsinghua.edu.cn/simple"
+echo "  4. mkdocs serve  # 本地预览"
+echo ""
+
