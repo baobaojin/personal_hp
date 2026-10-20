@@ -16,20 +16,34 @@
 
 ## 快速开始
 
-### 1. 克隆仓库
+### 方式一：一行命令安装（推荐）
 
 ```bash
-git clone https://github.com/你的用户名/personal-hp.git
-cd personal-hp
+curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.sh | bash
 ```
 
-### 2. 选择插件安装
+运行后交互选择插件和安装模式，无需提前 clone 仓库。
+
+也可以直接指定参数，跳过交互：
 
 ```bash
+# 初始化新知识库
+curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.sh | bash -s -- personal-kb init ~/my-kb
+
+# 安装到已有知识库
+curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.sh | bash -s -- personal-kb upgrade ~/my-kb
+
+# 安装前端开发规范
+curl -fsSL https://raw.githubusercontent.com/baobaojin/personal_hp/main/install.sh | bash -s -- dev
+```
+
+### 方式二：克隆后安装
+
+```bash
+git clone https://github.com/baobaojin/personal_hp.git
+cd personal_hp
 bash install.sh
 ```
-
-运行后交互选择插件和安装模式。
 
 ---
 
