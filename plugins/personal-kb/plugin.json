@@ -1,0 +1,8 @@
+{
+  "name": "personal-kb",
+  "version": "1.0.0",
+  "description": "个人知识库 AI 工作流插件",
+  "changelog": {
+    "1.0.0": "初始版本，包含 intake/ask/review/plan 基础 Skill，学习工作流和开发工作流"
+  }
+}
