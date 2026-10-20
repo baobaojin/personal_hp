@@ -54,6 +54,9 @@ done
 log_step "[3/4] 安装 skills 和工作流..."
 bash "$PLUGIN_DIR/scripts/upgrade.sh" "$TARGET" "$PLUGIN_DIR" --silent
 
+# 给根目录脚本加执行权限
+chmod +x "$TARGET"/*.sh 2>/dev/null || true
+
 # 5. 复制配置文件模板
 log_step "[4/4] 生成配置文件..."
 
